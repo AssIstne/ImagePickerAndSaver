@@ -81,14 +81,9 @@ public class ImagePicker implements LoaderManager.LoaderCallbacks<Cursor> {
                     mActivity,
                     MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
                     IMAGE_PROJECTION,
-                    getSelectionFromConfig(config), null, IMAGE_PROJECTION[4] + " DESC");
+                    config.getSelection(), null, IMAGE_PROJECTION[4] + " DESC");
         }
         return cursorLoader;
-    }
-
-    // TODO: 17/3/27 根据Config的值构建where语句
-    private String getSelectionFromConfig(SelectionConfig config) {
-        return "";
     }
 
     @Override
@@ -117,6 +112,7 @@ public class ImagePicker implements LoaderManager.LoaderCallbacks<Cursor> {
                     File dir = new File(parentPath);
                     imageFolder.name = dir.getName();
                     imageFolder.path = dir.getAbsolutePath();
+                    folderGroup.put(imageFolder.path, imageFolder);
                 }
                 imageFolder.addImageItem(imageItem);
             }
